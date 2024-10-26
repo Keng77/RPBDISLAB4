@@ -1,5 +1,6 @@
 using Microsoft.EntityFrameworkCore;
 using RPBDISlLab4.Data;
+using RPBDISlLab4.Middleware;
 
 namespace RPBDISlLab4
 {
@@ -17,26 +18,40 @@ namespace RPBDISlLab4
             services.AddDbContext<InspectionsDbContext>(options => options.UseSqlServer(connectionString));
 
 
-            // Add services to the container.
-            builder.Services.AddControllersWithViews();
+            // добавление кэширования
+            services.AddMemoryCache();
+            // добавление поддержки сессии
+            services.AddDistributedMemoryCache();
+            services.AddSession();
 
-            var app = builder.Build();
+            //Использование MVC
+            services.AddControllersWithViews();
+            WebApplication app = builder.Build();
 
-            // Configure the HTTP request pipeline.
-            if (!app.Environment.IsDevelopment())
+            if (app.Environment.IsDevelopment())
+            {
+                app.UseDeveloperExceptionPage();
+            }
+            else
             {
                 app.UseExceptionHandler("/Home/Error");
-                // The default HSTS value is 30 days. You may want to change this for production scenarios, see https://aka.ms/aspnetcore-hsts.
-                app.UseHsts();
             }
 
-            app.UseHttpsRedirection();
+            // добавляем поддержку статических файлов
             app.UseStaticFiles();
 
+            // добавляем поддержку сессий
+            app.UseSession();
+
+            // добавляем компонент middleware по инициализации базы данных и производим инициализацию базы
+            app.UseDbInitializer();
+
+            //// добавляем компонент middleware для реализации кэширования и записывем данные в кэш
+            //app.UseOperatinCache("Operations 10");
+
+            //Маршрутизация
             app.UseRouting();
-
-            app.UseAuthorization();
-
+            // устанавливаем сопоставление маршрутов с контроллерами 
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");
