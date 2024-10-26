@@ -46,8 +46,8 @@ namespace RPBDISlLab4
             // добавляем компонент middleware по инициализации базы данных и производим инициализацию базы
             app.UseDbInitializer();
 
-            //// добавляем компонент middleware для реализации кэширования и записывем данные в кэш
-            //app.UseOperatinCache("Operations 10");
+            // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
+            app.UseOperatinCache("Inspections 10");
 
             //Маршрутизация
             app.UseRouting();
