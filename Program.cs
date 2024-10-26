@@ -1,10 +1,21 @@
+using Microsoft.EntityFrameworkCore;
+using RPBDISlLab4.Data;
+
 namespace RPBDISlLab4
 {
     public class Program
     {
         public static void Main(string[] args)
         {
-            var builder = WebApplication.CreateBuilder(args);
+            WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
+            IServiceCollection services = builder.Services;
+
+            // внедрение зависимости для доступа к БД с использованием EF
+            string connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
+
+
+            services.AddDbContext<InspectionsDbContext>(options => options.UseSqlServer(connectionString));
+
 
             // Add services to the container.
             builder.Services.AddControllersWithViews();
