@@ -18,6 +18,7 @@ namespace RPBDISlLab4.Data
 
         public virtual DbSet<Inspector> Inspectors { get; set; }
 
+        public virtual DbSet<ViolationType> ViolationTypes { get; set; }
 
     }
 }
