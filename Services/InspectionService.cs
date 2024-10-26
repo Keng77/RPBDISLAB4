@@ -15,12 +15,14 @@ namespace RPBDISlLab4.Services
             var inspectors = _context.Inspectors.Take(numberRows).ToList();
             var violationTypes = _context.ViolationTypes.Take(numberRows).ToList();
             List<InspectionViewModel> inspections = [.. _context.Inspections
-                .OrderByDescending(d => d.InspectionDate)
+                .OrderBy(d => d.InspectionId)
                 .Select(t => new InspectionViewModel
                 {
                     InspectionId = t.InspectionId,
+                    Enterprise = t.Enterprise.Name,
                     InspectionDate = t.InspectionDate,
                     ProtocolNumber = t.ProtocolNumber,
+                    ViolationType = t.ViolationType.Name,
                     ResponsiblePerson = t.Enterprise.DirectorName,
                     PenaltyAmount = t.ViolationType.PenaltyAmount,
                     PaymentDeadline = t.PaymentDeadline,
@@ -28,7 +30,7 @@ namespace RPBDISlLab4.Services
                     PaymentStatus = t.PaymentStatus,
                     CorrectionStatus = t.CorrectionStatus,
                 })
-                .Take(numberRows)];
+                .Take(numberRows)]; 
 
             HomeViewModel homeViewModel = new()
             {

@@ -8,6 +8,9 @@ namespace RPBDISlLab4.ViewModels
         //Код проверки
         public int InspectionId { get; set; }
 
+        [Display(Name = "Предприятие")]
+        public string Enterprise { get; set; }
+
         [Display(Name = "Дата Проверки")]
         [DataType(DataType.Date)]
         public DateOnly InspectionDate { get; set; }

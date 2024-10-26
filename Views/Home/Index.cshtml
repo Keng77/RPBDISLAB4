@@ -1,8 +1,109 @@
-﻿@{
-    ViewData["Title"] = "Home Page";
+﻿@model RPBDISlLab4.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Проверки Предприятия";
 }
+<table border="0" cellspacing="100">
+    <tr>
+        <td>
+            <table border="1">
+                <caption>Предприятия</caption>
+                <tr>
+                    <th>Код Предприятия</th>
+                    <th>Предприятие</th>
+                    <th>Тип Собственности</th>
+                    <th>Адресс</th>
+                    <th>Управляющий</th>
+                    <th>"Номер Управляющего</th>
+                </tr>
+                @foreach (var enterprise in Model.Enterprises)
 
-<div class="text-center">
-    <h1 class="display-4">Welcome</h1>
-    <p>Learn about <a href="https://learn.microsoft.com/aspnet/core">building Web apps with ASP.NET Core</a>.</p>
-</div>
+                {
+                    <tr>
+                        <td>@enterprise.EnterpriseId</td>
+                        <td>@enterprise.Name</td>
+                        <td>@enterprise.OwnershipType</td>
+                        <td>@enterprise.Address</td>
+                        <td>@enterprise.DirectorName</td>
+                        <td>@enterprise.DirectorPhone</td>
+                    </tr>
+                }
+            </table>
+        </td>
+
+        <td>
+            <table border="1">
+                <caption>Нарушения</caption>
+                <tr>
+                    <th>Код Нарушения</th>
+                    <th>Тип нарушения</th>
+                    <th>Задолженность</th>
+                    <th>Дедлайн исправления</th>
+                    <th></th>
+                </tr>
+                @foreach (var violationType in Model.ViolationTypes)
+                {
+                    <tr>
+                        <td>@violationType.ViolationTypeId</td>
+                        <td>@violationType.Name</td>
+                        <td>@violationType.PenaltyAmount</td>
+                        <td>@violationType.CorrectionPeriodDays</td>
+                    </tr>
+                }
+            </table>
+        </td>
+    </tr>
+</table>
+
+<table border="1" cellspacing="100">
+    <tr>
+        <td>
+            <table border="1">
+                <caption>Инспектора</caption>
+                <tr>
+                    <th>Код Инспектора</th>
+                    <th>Проверяющий</th>
+                    <th>Департамент</th>
+                </tr>
+                @foreach (var inspector in Model.Inspectors)
+                {
+                    <tr>
+                        <td>@inspector.InspectorId</td>
+                        <td>@inspector.FullName</td>
+                        <td>@inspector.Department</td>
+                    </tr>
+                }
+            </table>
+
+    <table border="1">
+    <caption>Проверки</caption>
+    <tr>
+                    <th>Код проверки</th>
+                    <th>Предприятие</th>
+                    <th>Дата Проверки</th>
+                    <th>Номер Протокола</th>
+                    <th>Тип Нарушения</th>
+                    <th>Ответственный</th>
+                    <th>Сумма задолженности</th>
+                    <th>Дедлайн Оплаты</th>
+                    <th>Дедлайн исправления</th>
+                    <th>Статус Оплаты</th>
+                    <th>Статус Исправления</th>
+    </tr>
+                 @foreach (var inspection in Model.Inspections)
+                 {
+                    <tr>
+                        <td>@inspection.InspectionId</td>
+                        <td>@inspection.Enterprise</td>
+                        <td>@inspection.InspectionDate</td>
+                        <td>@inspection.ProtocolNumber</td>
+                        <td>@inspection.ViolationType</td>
+                        <td>@inspection.ResponsiblePerson</td>
+                        <td>@inspection.PenaltyAmount</td>
+                        <td>@inspection.PaymentDeadline</td>
+                        <td>@inspection.CorrectionDeadline</td>
+                        <td>@inspection.PaymentStatus</td>
+                        <td>@inspection.CorrectionStatus</td>
+                    </tr>
+                  }
+        </table>
+

@@ -1,6 +1,7 @@
 using Microsoft.EntityFrameworkCore;
 using RPBDISlLab4.Data;
 using RPBDISlLab4.Middleware;
+using RPBDISlLab4.Services;
 
 namespace RPBDISlLab4
 {
@@ -23,6 +24,7 @@ namespace RPBDISlLab4
             // добавление поддержки сессии
             services.AddDistributedMemoryCache();
             services.AddSession();
+            services.AddTransient<IInspectionService, InspectionService>(); // добавляем сервис IInspectionService
 
             //Использование MVC
             services.AddControllersWithViews();

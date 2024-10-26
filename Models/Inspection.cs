@@ -8,11 +8,9 @@ namespace RPBDISlLab4.Models
         [Display(Name = "Код проверки")]
         public int InspectionId { get; set; }
 
-        [Key]
         [Display(Name = "Код Испектора")]
         public int InspectorId { get; set; }
 
-        [Key]
         [Display(Name = "Код Предприятия")]
         public int EnterpriseId { get; set; }
 
@@ -23,7 +21,6 @@ namespace RPBDISlLab4.Models
         [Display(Name = "Номер Протокола")]
         public string ProtocolNumber { get; set; }
 
-        [Key]
         [Display(Name = "Код Нарушения")]
         public int ViolationTypeId { get; set; }
 
