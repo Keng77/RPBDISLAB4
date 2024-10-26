@@ -1,20 +1,12 @@
-﻿using System.ComponentModel.DataAnnotations;
+﻿using RPBDISlLab4.Models;
+using System.ComponentModel.DataAnnotations;
 
-namespace RPBDISlLab4.Models
+namespace RPBDISlLab4.ViewModels
 {
-    public partial class Inspection
+    public class InspectionViewModel
     {
-        [Key]
-        [Display(Name = "Код проверки")]
+        //Код проверки
         public int InspectionId { get; set; }
-
-        [Key]
-        [Display(Name = "Код Испектора")]
-        public int InspectorId { get; set; }
-
-        [Key]
-        [Display(Name = "Код Предприятия")]
-        public int EnterpriseId { get; set; }
 
         [Display(Name = "Дата Проверки")]
         [DataType(DataType.Date)]
@@ -23,14 +15,13 @@ namespace RPBDISlLab4.Models
         [Display(Name = "Номер Протокола")]
         public string ProtocolNumber { get; set; }
 
-        [Key]
-        [Display(Name = "Код Нарушения")]
-        public int ViolationTypeId { get; set; }
+        [Display(Name = "Тип Нарушения")]
+        public string ViolationType { get; set; }
 
         [Display(Name = "Ответственный")]
         public string ResponsiblePerson { get; set; }
 
-        [Display(Name = "Задолженность")]
+        [Display(Name = "Сумма задолженности")]
         public decimal PenaltyAmount { get; set; }
 
         [Display(Name = "Дедлайн Оплаты")]
@@ -47,10 +38,5 @@ namespace RPBDISlLab4.Models
         [Display(Name = "Статус Исправления")]
         public string? CorrectionStatus { get; set; }
 
-        public virtual Enterprise Enterprise { get; set; } = null!;
-
-        public virtual Inspector Inspector { get; set; } = null!;
-
-        public virtual ViolationType ViolationType { get; set; } = null!;
     }
 }
