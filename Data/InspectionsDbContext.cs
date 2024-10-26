@@ -12,13 +12,13 @@ namespace RPBDISlLab4.Data
         {
         }
 
-        public virtual DbSet<Enterprise> Enterprises { get; set; }
+        public  DbSet<Enterprise> Enterprises { get; set; }
 
-        public virtual DbSet<Inspection> Inspections { get; set; }
+        public  DbSet<Inspection> Inspections { get; set; }
 
-        public virtual DbSet<Inspector> Inspectors { get; set; }
+        public  DbSet<Inspector> Inspectors { get; set; }
 
-        public virtual DbSet<ViolationType> ViolationTypes { get; set; }
+        public  DbSet<ViolationType> ViolationTypes { get; set; }
 
     }
 }
