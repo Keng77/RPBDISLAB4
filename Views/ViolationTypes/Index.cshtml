@@ -1,0 +1,28 @@
+﻿@model RPBDISlLab4.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Список Типов Нарушений";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Код Нарушения</th>
+            <th>Тип Нарушения</th>
+            <th>Сумма Задолженности</th>
+            <th>Период Исправления (дней)</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var violationType in Model.ViolationTypes)
+        {
+            <tr>
+                <td>@violationType.ViolationTypeId</td>
+                <td>@violationType.Name</td>
+                <td>@violationType.PenaltyAmount</td>
+                <td>@violationType.CorrectionPeriodDays</td>
+            </tr>
+        }
+    </tbody>
+</table>

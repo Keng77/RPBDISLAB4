@@ -1,0 +1,32 @@
+﻿@model RPBDISlLab4.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Список Предприятий";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Код Предприятия</th>
+            <th>Название</th>
+            <th>Тип Собственности</th>
+            <th>Адрес</th>
+            <th>Управляющий</th>
+            <th>Телефон Управляющего</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var enterprise in Model.Enterprises)
+        {
+            <tr>
+                <td>@enterprise.EnterpriseId</td>
+                <td>@enterprise.Name</td>
+                <td>@enterprise.OwnershipType</td>
+                <td>@enterprise.Address</td>
+                <td>@enterprise.DirectorName</td>
+                <td>@enterprise.DirectorPhone</td>
+            </tr>
+        }
+    </tbody>
+</table>

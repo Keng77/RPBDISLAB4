@@ -1,16 +1,20 @@
-﻿using RPBDISlLab4.ViewModels;
+﻿using Microsoft.AspNetCore.Mvc;
+using RPBDISlLab4.ViewModels;
 using RPBDISlLab4.Data;
-using RPBDISlLab4.Models;
+using RPBDISlLab4.Filters;
+using System.Threading.Tasks;
 
-namespace RPBDISlLab4.Services
+namespace RPBDISlLab4.Controllers
 {
-    // Класс выборки 10 записей из всех таблиц 
-    public class InspectionService(InspectionsDbContext context) : IInspectionService
+    public class CachedController(InspectionsDbContext context) : Controller
     {
         private readonly InspectionsDbContext _context = context;
 
-        public HomeViewModel GetHomeViewModel(int numberRows = 10)
+        // Кэширование с использования фильтра ресурсов
+        [TypeFilter(typeof(CacheResourceFilterAttribute))]
+        public IActionResult Index()
         {
+            int numberRows = 10;
             var enterprises = _context.Enterprises.Take(numberRows).ToList();
             var inspectors = _context.Inspectors.Take(numberRows).ToList();
             var violationTypes = _context.ViolationTypes.Take(numberRows).ToList();
@@ -30,7 +34,7 @@ namespace RPBDISlLab4.Services
                     PaymentStatus = t.PaymentStatus,
                     CorrectionStatus = t.CorrectionStatus,
                 })
-                .Take(numberRows)]; 
+                .Take(numberRows)];
 
             HomeViewModel homeViewModel = new()
             {
@@ -39,7 +43,7 @@ namespace RPBDISlLab4.Services
                 ViolationTypes = violationTypes,
                 Inspections = inspections
             };
-            return homeViewModel;
+            return View("~/Views/Home/Index.cshtml", homeViewModel);
         }
     }
 }

@@ -11,7 +11,7 @@ namespace RPBDISlLab4.Middleware
         private readonly IMemoryCache _memoryCache = memoryCache;
         private readonly string _cacheKey = cacheKey;
 
-        public Task Invoke(HttpContext httpContext, IInspectionService inspectionService)
+        public Task Invoke(HttpContext httpContext, IViewModelService inspectionService)
         {
             // пытаемся получить элемент из кэша
             if (!_memoryCache.TryGetValue(_cacheKey, out HomeViewModel homeViewModel))

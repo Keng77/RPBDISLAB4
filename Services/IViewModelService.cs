@@ -2,7 +2,7 @@
 
 namespace RPBDISlLab4.Services
 {
-    public interface IInspectionService
+    public interface IViewModelService
     {
         HomeViewModel GetHomeViewModel(int numberRows = 10);
 

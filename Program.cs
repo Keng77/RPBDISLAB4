@@ -1,3 +1,4 @@
+using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using RPBDISlLab4.Data;
 using RPBDISlLab4.Middleware;
@@ -12,22 +13,31 @@ namespace RPBDISlLab4
             WebApplicationBuilder builder = WebApplication.CreateBuilder(args);
             IServiceCollection services = builder.Services;
 
-            // внедрение зависимости для доступа к БД с использованием EF
+            // Внедрение зависимости для доступа к БД с использованием EF
             string connectionString = builder.Configuration.GetConnectionString("MsSqlConnection");
-
-
             services.AddDbContext<InspectionsDbContext>(options => options.UseSqlServer(connectionString));
 
-
-            // добавление кэширования
+            // Добавление кэширования
             services.AddMemoryCache();
-            // добавление поддержки сессии
+            services.AddResponseCaching();
+            services.AddControllers(options =>
+            {
+                options.CacheProfiles.Add("Default",
+                    new CacheProfile()
+                    {
+                        Duration = 2 * 16 + 240
+                    });
+            });
+            // Добавление поддержки сессии
             services.AddDistributedMemoryCache();
             services.AddSession();
-            services.AddTransient<IInspectionService, InspectionService>(); // добавляем сервис IInspectionService
 
-            //Использование MVC
+            // Регистрация сервисов
+            services.AddTransient<IViewModelService, HomeModelService>();
+
+            // Использование MVC
             services.AddControllersWithViews();
+
             WebApplication app = builder.Build();
 
             if (app.Environment.IsDevelopment())
@@ -39,21 +49,24 @@ namespace RPBDISlLab4
                 app.UseExceptionHandler("/Home/Error");
             }
 
-            // добавляем поддержку статических файлов
+            // Добавляем поддержку статических файлов
             app.UseStaticFiles();
 
-            // добавляем поддержку сессий
+            // Добавляем поддержку сессий
             app.UseSession();
 
-            // добавляем компонент middleware по инициализации базы данных и производим инициализацию базы
+            // Инициализация базы данных
             app.UseDbInitializer();
 
-            // добавляем компонент middleware для реализации кэширования и записывем данные в кэш
+            // Кэширование
             app.UseOperatinCache("Inspections 10");
 
-            //Маршрутизация
+            // Настройка маршрутизации
             app.UseRouting();
-            // устанавливаем сопоставление маршрутов с контроллерами 
+
+            app.UseResponseCaching(); // Включение ResponseCaching Middleware
+
+            // Устанавливаем сопоставление маршрутов с контроллерами
             app.MapControllerRoute(
                 name: "default",
                 pattern: "{controller=Home}/{action=Index}/{id?}");

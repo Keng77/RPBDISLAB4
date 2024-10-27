@@ -1,0 +1,26 @@
+﻿@model RPBDISlLab4.ViewModels.HomeViewModel
+@{
+    ViewData["Title"] = "Список Инспекторов";
+}
+
+<h2>@ViewData["Title"]</h2>
+
+<table class="table table-striped table-bordered">
+    <thead>
+        <tr>
+            <th>Код Инспектора</th>
+            <th>Имя Полное</th>
+            <th>Департамент</th>
+        </tr>
+    </thead>
+    <tbody>
+        @foreach (var inspector in Model.Inspectors)
+        {
+            <tr>
+                <td>@inspector.InspectorId</td>
+                <td>@inspector.FullName</td>
+                <td>@inspector.Department</td>
+            </tr>
+        }
+    </tbody>
+</table>
